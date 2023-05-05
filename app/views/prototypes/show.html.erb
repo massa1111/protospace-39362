@@ -9,8 +9,8 @@
       
         <div class="prototype__manage">
           <%= link_to "編集する", edit_prototype_path(@prototype.id), class: :prototype__btn %>
-          <%= link_to "削除する", prototype_path, method: :delete, class: :prototype__btn %>
-        </div>
+          <%= link_to "削除する", prototype_path(@prototype), method: :delete, class: :prototype__btn %>
+       </div>
      <% end %>
       <div class="prototype__image">
         <%= image_tag @prototype.image %>
@@ -45,18 +45,19 @@
         <%# // ログインしているユーザーには上記を表示する %>
         <ul class="comments_lists">
           <%# 投稿に紐づくコメントを一覧する処理を記述する %>
+            <% @comments.each do |comment| %>
             <li class="comments_list">
-             <% @comments.each do |comment| %>
-        <p>
-          <strong><%= link_to comment.user.name, "/users/#{comment.user_id}" %>：</strong>
-          <%= comment.content %>
-        </p>
-      <% end %>
              
-              by<%= link_to @prototype.user.name, user_path(@prototype.user), class: :comment_user %>
-             
-             
-             </li>
+          <p>
+           <%= comment.content %>
+           <%= link_to comment.user.name,user_path(comment.user_id), class: :comment_user %>
+          </p>
+         <% end %>
+           </li>
+
+
+
+           
           <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
         </ul>
       </div>
